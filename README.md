@@ -1,4 +1,3 @@
-// ...existing code...
 # Patrones de diseño
 
 Colección educativa de implementaciones en TypeScript de patrones de diseño (creacionales, estructurales y de comportamiento). El proyecto está pensado para ejecutarse con Deno (recomendado) o Bun. También es posible usar Node.js compilando TypeScript primero.
