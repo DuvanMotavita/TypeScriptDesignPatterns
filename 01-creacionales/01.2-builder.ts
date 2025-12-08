@@ -50,33 +50,42 @@ class QueryBuilder {
   }
 
   select(...fields: string[]): QueryBuilder {
-    throw new Error('Method not implemented.');
+    this.fields = fields; // Si no se pasan campos, se seleccionan todos (*)
+    return this;
   }
 
   where(condition: string): QueryBuilder {
-    throw new Error('Method not implemented.');
+    this.conditions.push(condition);
+    return this;
   }
 
   orderBy(field: string, direction: 'ASC' | 'DESC' = 'ASC'): QueryBuilder {
-    throw new Error('Method not implemented.');
+    this.orderFields.push(`${field} ${direction}`);
+    return this;
   }
 
   limit(count: number): QueryBuilder {
-    throw new Error('Method not implemented.');
+    this.limitCount = count;
+    return this;
   }
 
   execute(): string {
+    const fields = this.fields.length > 0 ? this.fields.join(', ') : '*';
+    const whereClause = this.conditions.length > 0 ? ` WHERE ${this.conditions.join(' AND ')}` : '';
+    const orderClause = this.orderFields.length > 0 ? ` ${this.orderFields.join(', ')}` : '';
+    const limitClause = this.limitCount ? ` limit ${this.limitCount}` : '';
     // Select id, name, email from users where age > 18 and country = 'Cri' order by name ASC limit 10;
-    throw new Error('Method not implemented.');
+    return `Select ${fields} from ${this.table} ${whereClause} order by ${orderClause} ${limitClause}`
   }
 }
 
 function main() {
   const usersQuery = new QueryBuilder('users')
     .select('id', 'name', 'email')
-    .where('age > 18')
-    .where("country = 'Cri'") // Esto debe de hacer una condición AND
+    .where('age > 20')
+    .where("country = 'CHI'") // Esto debe de hacer una condición AND
     .orderBy('name', 'ASC')
+    .orderBy('age', 'DESC')
     .limit(10)
     .execute();
 
