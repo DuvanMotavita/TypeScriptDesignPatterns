@@ -60,8 +60,14 @@ class Memory {
 class ComputerFacade {
   // TODO: Agregar los atributos necesarios CPU, Memory y HardDrive
 
+  private cpu: CPU = new CPU();
+  private memory: Memory = new Memory();
+  private hardDrive: HardDrive = new HardDrive();
+
   // TODO: Agregar el constructor para instanciar los atributos CPU, Memory y HardDrive
-  constructor() {}
+  constructor() {
+
+  }
 
   startComputer(): void {
     console.log('\n%cIniciando la computadora...', COLORS.cyan);
@@ -71,6 +77,10 @@ class ComputerFacade {
     // 2. Saltar a la posición de memoria 0 - cpu.jump(0)
     // 3. Ejecutar las instrucciones del CPU - cpu.execute()
 
+    console.log('Cargando sistema.');
+    this.memory.load(0, this.hardDrive.read(0, 1024));
+    this.cpu.jump(0);
+    this.cpu.execute();
     console.log('Computadora lista para usar.\n');
   }
 
@@ -83,6 +93,9 @@ class ComputerFacade {
     // 2. Liberar la memoria - memory.free()
     // 3. Cerrar el disco duro - hardDrive.close()
 
+    this.cpu.stopOperations();
+    this.memory.free();
+    this.hardDrive.close();
     console.log('Computadora apagada.\n');
   }
 }
