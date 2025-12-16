@@ -42,11 +42,14 @@ class BulletTypeFactory {
     // TODO: Implementar un método para obtener un tipo de bala
     // Si no existe el tipo de bala, crearlo y guardarlo en la lista de tipos de bala
     // Si existe el tipo de bala, devolverlo
-
+    const key = `${name}-${damage}-${color}`;
+    if (!this.bulletTypes[key]) {
+      console.log(`%cCreando nuevo tipo de bala: ${key}`, COLORS.red);
+      this.bulletTypes[key] = new BulletType(name, damage, color);
+    }
     // TODO: El key, debería de ser un identificador único para cada tipo de bala
     // name-damage-color
-
-    throw new Error('Method not implemented.');
+    return this.bulletTypes[key];
   }
 }
 
